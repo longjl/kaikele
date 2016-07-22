@@ -64,22 +64,24 @@ public class MatrixToImageWriter {
         int width = 300; // 二维码图片宽度
         int height = 300; // 二维码图片高度
         String format = "png";// 二维码的图片格式
-        String savePath = "/Users/longjianlin/Documents/05 开课/api-kaike/";//二维码保存地址
+        String savePath = "/Users/longjianlin/Documents/05 开课/kaikele/projects/api/src/main/webapp/upload/qrcode/";//二维码保存地址
 
         Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");   // 内容所使用字符集编码
         BitMatrix bitMatrix = null;
+
+        String fileName = CodeUtils.createCode();
         try {
             bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
             // 生成二维码(二维码的名字使用12为字符命名)
-            File outputFile = new File(savePath + File.separator + CodeUtils.createCode() + ".png");
+            File outputFile = new File(savePath + File.separator +fileName + ".png");
             MatrixToImageWriter.writeToFile(bitMatrix, format, outputFile);
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "/upload/qrcode/" + CodeUtils.createCode() + ".png";
+        return "/qrcode/" +fileName + ".png";
     }
 
 
@@ -95,7 +97,7 @@ public class MatrixToImageWriter {
 
         BitMatrix bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, width, height, hints);
         // 生成二维码
-        File outputFile = new File("/Users/longjianlin/Documents/05 开课/api-kaike/" + File.separator + "new.png");
+        File outputFile = new File("/Users/longjianlin/Documents/05 开课/kaikele/projects/api/src/main/webapp/upload/qrcode/" + File.separator + "new.png");
         MatrixToImageWriter.writeToFile(bitMatrix, format, outputFile);
     }
 }

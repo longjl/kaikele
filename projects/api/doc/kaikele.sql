@@ -27,29 +27,19 @@ CREATE TABLE `course` (
   `course_code` varchar(50) NOT NULL DEFAULT '' COMMENT '课程码',
   `desc` text COMMENT '课程描述',
   `cover` varchar(255) NOT NULL DEFAULT '' COMMENT '课程封面',
-  `lesson_number` varchar(10) NOT NULL DEFAULT '0' COMMENT '课节数',
-  `price` int(11) NOT NULL DEFAULT '0' COMMENT '课程价格',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `lesson_number` varchar(10) NOT NULL DEFAULT 0 COMMENT '课节数',
+  `price` int(11) NOT NULL DEFAULT 0 COMMENT '课程价格',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
   `status` varchar(10) NOT NULL DEFAULT 'true' COMMENT '状态,true:上架 , false:下架',
   `url` varchar(255) DEFAULT NULL COMMENT '(音频,视频,课件,程序)地址',
   `qr_code` varchar(255) DEFAULT NULL COMMENT '课程二维码',
-  `open_date` timestamp NULL DEFAULT NULL COMMENT '开课日期',
+  `template_id` int(11) NOT NULL DEFAULT 0 COMMENT '模板id',
+  `open_date` VARCHAR(50) NULL DEFAULT NULL COMMENT '开课日期',
   `create_at` timestamp NULL DEFAULT NULL,
   `update_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='课程信息表';
-
--- ----------------------------
---  Table structure for `course_template`
--- ----------------------------
-DROP TABLE IF EXISTS `course_template`;
-CREATE TABLE `course_template` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `template_id` int(11) NOT NULL DEFAULT '0' COMMENT '模板id',
-  `course_id` int(11) NOT NULL DEFAULT '0' COMMENT '课程id',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='课程模板关联表';
 
 -- ----------------------------
 --  Table structure for `template`
@@ -84,8 +74,8 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `user_course`;
 CREATE TABLE `user_course` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
-  `course_id` int(11) NOT NULL DEFAULT '0' COMMENT '课程id',
+  `user_id` int(11) NOT NULL DEFAULT 0 COMMENT '用户id',
+  `course_id` int(11) NOT NULL DEFAULT 0 COMMENT '课程id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户课程关联表';
 

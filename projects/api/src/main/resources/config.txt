@@ -4,11 +4,11 @@ devMode = true
 
 ##########################################################################
 ## 本地开发环境上 data source 的配置
-loc_jdbcUrl = jdbc:mysql://localhost:3306/kaike?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+loc_jdbcUrl = jdbc:mysql://localhost:3306/kaikele?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
 loc_user = root
 loc_password =
 
 ## BAE环境上 data source 的配置
-bae_jdbcUrl = jdbc:mysql://api.pickpick.io:10036/kaike?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+bae_jdbcUrl = jdbc:mysql://api.pickpick.io:10036/kaikele?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
 bae_user = admin
 bae_password = abcd1234

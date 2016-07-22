@@ -1,0 +1,259 @@
+<#include "_layout.html"/>
+<@layout>
+<!-- BANNER CREATE COURSE -->
+<section class="sub-banner sub-banner-create-course">
+    <div class="awe-color bg-color-1"></div>
+    <div class="container">
+        <h2 class="md ilbl">创建一个课程</h2>
+        <i class="icon md-pencil"></i>
+    </div>
+</section>
+<!-- END / BANNER CREATE COURSE -->
+
+<!-- CREATE COURSE CONTENT -->
+<section id="create-course-section" class="create-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="create-course-sidebar">
+                    <ul class="list-bar">
+                        <li><span class="count">1</span>选择课程模板</li>
+                        <li class="active"><span class="count">2</span>填写课程信息</li>
+                        <li><span class="count">3</span>获取课程码</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="create-course-content">
+                        <!-- PROMO VIDEO -->
+                        <div class="promo-video create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>标题</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-item">
+                                        <input type="text" id="title" name="title" placeholder="请输入课程标题">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END / PROMO VIDEO -->
+
+                        <!-- COURSE BANNER -->
+                        <div class="course-banner create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>课程封面</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="image-info">
+                                        <img id="img_cover" src="/images/img-upload.jpg" alt="">
+                                        <input type="hidden" id="cover">
+                                    </div>
+                                    <div class="upload-recrop">
+                                        <div class="upload-image up-file">
+                                            <!--<a href="#" id="coverFiles"><i class="icon md-upload"></i>上传图片</a>-->
+                                            <button id="coverFiles" class="mc-btn-3 btn-style-1"><i
+                                                    class="icon md-upload"></i>上传图片
+                                            </button>
+                                            <input type="file" id="file">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END / COURSE BANNER -->
+
+                        <!-- PROMO VIDEO -->
+                        <div class="promo-video create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>视频播放地址</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-item">
+                                        <input type="text" id="url" name="url" placeholder="请输入视频播放地址">
+                                    </div>
+                                    <div class="upload-video">
+                                        如 : <a href="http://edu.csdn.net/course/detail/2050" target="_blank">http://edu.csdn.net/course/detail/2050</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END / PROMO VIDEO -->
+
+                        <!-- DESCRIPTION -->
+                        <div class="description create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>课程介绍</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="description-editor text-form-editor">
+                                        <textarea id="desc" name="desc" placeholder="请输入课程介绍" autofocus></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END / DESCRIPTION -->
+
+
+                        <div class="promo-video create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>课节数</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-item">
+                                        <input type="text" id="lesson_number" name="lesson_number"
+                                               placeholder="请输入课节数 (如:25)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="promo-video create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>课程价格</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-item">
+                                        <input type="text" id="price" name="price" placeholder="请输入课程价格 (如:1690)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="promo-video create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>开课日期</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-item">
+                                        <input type="text" id="open_date" name="open_date"
+                                               placeholder="请输入开课日期 (如:2017年8月13日)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-action">
+                            <input type="hidden" id="template_id" name="template_id" value="${template_id}">
+                            <input type="button" onclick="add()" value="保 存" class="submit mc-btn-3 btn-style-1">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    var editor = new Simditor({
+        textarea: $('#desc')
+        //optional options
+    });
+
+    //老师头像上传
+    var uploader = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'coverFiles', // you can pass an id...
+        //container: document.getElementById('cover_container'), // ... or DOM Element itself
+        url: '/upload/course',
+        flash_swf_url: '/js/plupload/Moxie.swf',
+        silverlight_xap_url: '/js/plupload/Moxie.xap',
+        multi_selection: false,//是否可以在文件浏览对话框中选择多个文件，true为可以，false为不可以。默认true，即可以选择多个文件。
+        filters: {
+            max_file_size: '5mb',
+            mime_types: [
+                {title: "Image files", extensions: "jpeg,jpg,gif,png"}
+//                , {title: "Zip files", extensions: "zip"}
+            ]
+        },
+        init: {
+            PostInit: function () {
+//                document.getElementById('coverUploadFiles').onclick = function () {
+//                    uploader.start();
+//                    return false;
+//                };
+            },
+
+            FilesAdded: function (up, files) {
+                plupload.each(files, function (file) {
+                    // $("#cover_tbody").html("<tr><td>" + file.name + "</td><td>" + plupload.formatSize(file.size) + "</td><td>" + file.percent + "%</td></tr>");
+                });
+
+                //组件添加文件事件中，删除之前已添加的文件
+                $.each(up.files, function (i, file) {
+                    if (up.files.length <= 1) {
+                        return;
+                    }
+                    up.removeFile(file);
+                });
+
+
+                uploader.start();
+            },
+
+            UploadProgress: function (up, file) {
+                //  $("#cover_tbody").html("<tr><td>" + file.name + "</td><td>" + plupload.formatSize(file.size) + "</td><td>" + file.percent + "%</td></tr>");
+            },
+            FileUploaded: function (up, file, result) {
+                if (result.response != null) {
+                    var json = eval("(" + result.response + ")");
+                    if (json.code === 200) {
+                        $('#img_cover').attr('src', '/upload/course/' + json.data.cover);
+                        $('#cover').val('/course/' + json.data.cover);
+                    }
+                }
+            },
+            Error: function (up, err) {
+                console.log('upload fail');
+            }
+        }
+    });
+    uploader.init();
+
+
+
+    /**************添加课程*************/
+    function add() {
+        //TODO 需要添加验证
+        var title = $("#title").val();
+        var cover = $("#cover").val();
+        var url = $("#url").val();
+        var desc = $("#desc").val();
+        var lesson_number = $("#lesson_number").val();
+        var price = $("#price").val();
+        var open_date = $("#open_date").val();
+        var template_id = $("#template_id").val();
+
+        $.ajax({
+            url: '/course/setp3',
+            type: 'POST',
+            data: {
+                title: title,
+                cover: cover,
+                url: url,
+                desc: desc,
+                lesson_number: lesson_number,
+                price: price,
+                open_date:open_date,
+                template_id:template_id
+            },
+            dataType: 'json',
+            timeout: 1000,
+            error: function () {
+                console.log('add error.')
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    location.href = '/course/detail/'+data.data.course.id;
+                }
+            }
+        });
+    }
+</script>
+<!-- END / CREATE COURSE CONTENT -->
+</@layout>

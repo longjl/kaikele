@@ -1,0 +1,75 @@
+<#include "_layout.html"/>
+<@layout>
+<!-- BANNER CREATE COURSE -->
+<section class="sub-banner sub-banner-create-course">
+    <div class="awe-color bg-color-1"></div>
+    <div class="container">
+        <h2 class="md ilbl">创建一个课程</h2>
+        <i class="icon md-pencil"></i>
+    </div>
+</section>
+<!-- END / BANNER CREATE COURSE -->
+
+<!-- CREATE COURSE CONTENT -->
+<section id="create-course-section" class="create-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="create-course-sidebar">
+                    <ul class="list-bar">
+                        <li ><span class="count">1</span>选择课程模板</li>
+                        <li><span class="count">2</span>填写课程信息</li>
+                        <li  class="active"><span class="count">3</span>获取课程码</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="create-course-content">
+
+                    <!-- PROMO VIDEO -->
+                    <div class="promo-video create-item">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h4>课程码</h4>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-item" style="font-size: 20px;color: red;">
+                                   ${course.course_code}
+                                </div>
+                                <div class="upload-video">
+                                    提示 : 课程码非常重要,课程码是用来编辑课程唯一的凭证,请您务必记住。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END / PROMO VIDEO -->
+
+                    <!-- COURSE BANNER -->
+                    <div class="course-banner create-item">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h4>课程二维码</h4>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="image-info">
+                                    <img src="/upload${course.qr_code}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END / COURSE BANNER -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    var editor = new Simditor({
+        textarea: $('#editor')
+        //optional options
+    });
+</script>
+<!-- END / CREATE COURSE CONTENT -->
+</@layout>

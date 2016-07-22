@@ -1,0 +1,82 @@
+<#include "_layout.html"/>
+<@layout>
+<!-- BANNER CREATE COURSE -->
+<section class="sub-banner sub-banner-create-course">
+    <div class="awe-color bg-color-1"></div>
+    <div class="container">
+        <h2 class="md ilbl">创建一个课程</h2>
+        <i class="icon md-pencil"></i>
+    </div>
+</section>
+<!-- END / BANNER CREATE COURSE -->
+
+
+<!-- CREATE COURSE CONTENT -->
+<section id="create-course-section" class="create-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="create-course-sidebar">
+                    <ul class="list-bar">
+                        <li class="active"><span class="count">1</span>选择课程模板</li>
+                        <li><span class="count">2</span>填写课程信息</li>
+                        <li><span class="count">3</span>获取课程码</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="create-course-content">
+                    <form id="form" action="/course/step2" method="get">
+                        <div class="for-level-from create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>选择课程模板</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-item form-radio radio-style">
+                                        <input type="radio" id="video" checked="checked" value="1" name="template_id">
+                                        <label for="video">
+                                            <i class="icon-radio"></i>
+                                            视频
+                                        </label>
+                                    </div>
+
+                                    <div class="form-item form-radio radio-style">
+
+                                        <input type="radio" id="audio" value="2" name="template_id">
+                                        <label for="audio">
+                                            <i class="icon-radio"></i>
+                                            音频
+                                        </label>
+                                    </div>
+
+                                    <div class="form-item form-radio radio-style">
+
+                                        <input type="radio" id="courseware" value="3" name="template_id">
+                                        <label for="courseware">
+                                            <i class="icon-radio"></i>
+                                            课件
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-action">
+                            <input type="button" value="下一步" onclick="toStep2()" class="submit mc-btn-3 btn-style-1">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function toStep2(){
+        var form = document.getElementById("form");
+        form.submit();
+    }
+</script>
+<!-- END / CREATE COURSE CONTENT -->
+</@layout>

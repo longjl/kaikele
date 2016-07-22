@@ -22,8 +22,11 @@ public class UploadController extends Controller {
     /**
      * 课程封面上传
      */
-    public void cover() {
-        UploadFile uploadFile = getFile();
+    public void course() {
+        int maxFile = 5 * 1024 * 1024; //最大限制2M
+        //上传路径
+        String uploadPath = "/course"; //实际路径 /upload/teacher
+        UploadFile uploadFile = getFile("file", uploadPath, maxFile, "utf-8");
         File file = uploadFile.getFile();
         String sufName = uploadFile.getFileName().substring(uploadFile.getFileName().lastIndexOf("."), uploadFile.getFileName().length());
         String imgPath = uploadFile.getUploadPath() + File.separator + System.currentTimeMillis() + sufName;
@@ -32,7 +35,7 @@ public class UploadController extends Controller {
         file.renameTo(dest);//重命名
 
         Map<String, Object> data = new HashMap<>();
-        data.put("cover", dest.getName());
+        data.put("cover",  dest.getName());
         Message message = new Message(HttpStatus.SC_OK, "success", data);
         renderJson(message);
     }

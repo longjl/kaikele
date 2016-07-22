@@ -2,6 +2,7 @@ package com.kaikele.common;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
+import com.kaikele.controller.CommonController;
 import com.kaikele.controller.CourseController;
 import com.kaikele.controller.UploadController;
 import com.kaikele.controller.UserController;
@@ -32,7 +33,7 @@ public class AppConfig extends JFinalConfig {
      * 配置路由
      */
     public void configRoute(Routes me) {
-//        me.add("/", IndexController.class);
+        me.add("/", CommonController.class);
         me.add("/user", UserController.class);
         me.add("/course",CourseController.class);
         me.add("/upload",UploadController.class);
@@ -105,8 +106,6 @@ public class AppConfig extends JFinalConfig {
         arp.addMapping("user", User.class);
         arp.addMapping("user_course",UserCourse.class);
         arp.addMapping("template",Template.class);
-        arp.addMapping("course_template",CourseTemplate.class);
-        arp.addMapping("course_code",CourseCode.class);
     }
 
 }

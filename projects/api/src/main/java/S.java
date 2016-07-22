@@ -8,7 +8,7 @@ public class S {
 	 * 第二个参数是设置访问的端口号 第三个参数是设置该项目的访问根目录 第四个参数是设置jetty每隔几秒钟扫描文件变化并重启应用
 	 */
 	public static void main(String[] args) throws Exception {
-		JFinal.start("/Users/longjianlin/Documents/05 开课/api-kaike/projects/api/src/main/webapp", 8082, "/", 5);
+		JFinal.start("/Users/longjianlin/Documents/05 开课/kaikele/projects/api/src/main/webapp", 8082, "/", 5);
 	}
 
 }
