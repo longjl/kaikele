@@ -1,0 +1,13 @@
+//#rootProject.name = 'MyProjects'
+
+// 
+// 所有子项目
+// 
+//include 'deps:core'
+//include 'projects:static'
+//include 'projects:web'
+//include 'projects:exam'
+//include 'projects:sns'
+//include 'projects:cms'
+//include 'webapps:fileupload'
+include 'projects:api'
