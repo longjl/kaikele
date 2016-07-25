@@ -18,14 +18,4 @@ public class Course extends Model<Course> {
     public Course getCourseByCode(final String code) {
         return Course.dao.findFirst("select c.* from course c left join course_code cc on c.id = cc.course_id where cc.`code` = ?", code);
     }
-
-    /**
-     * 根据id获取课程
-     *
-     * @param id
-     * @return
-     */
-    public Course getCourseById(final int id) {
-        return Course.dao.findFirst("select c.*,cc.code from course c left join course_code cc on c.id = cc.course_id where c.id = ?",id);
-    }
 }

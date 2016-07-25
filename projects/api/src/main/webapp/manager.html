@@ -1,0 +1,64 @@
+<#include "_layout.html"/>
+<@layout>
+<!-- BANNER CREATE COURSE -->
+<section class="sub-banner sub-banner-create-course">
+    <div class="awe-color bg-color-1"></div>
+    <div class="container">
+        <h2 class="md ilbl">管理课程</h2>
+        <i class="icon md-pencil"></i>
+    </div>
+</section>
+<!-- END / BANNER CREATE COURSE -->
+
+
+<!-- CREATE COURSE CONTENT -->
+<section id="create-course-section" class="create-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="create-course-sidebar">
+                    <ul class="list-bar">
+                        <li class="active"><span class="count">1</span>课程码校验</li>
+                        <li><span class="count">2</span>编辑课程信息</li>
+                        <li><span class="count">3</span>完成</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="create-course-content">
+                    <form id="form" action="/course/editCourse" method="get">
+                        <div class="for-level-from create-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>课程码</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-item">
+                                        <input style="max-width: 300px;" type="text" id="course_code" name="course_code" value="${course_code}" placeholder="请输入课程码">
+
+                                        <#if (error != '')>
+                                            <span style="color: red;">没有找到相关课程,请您确认输入的课程码是否正确.</span>
+                                        </#if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-action">
+                            <input type="button" value="下一步" onclick="toStep2()" class="submit mc-btn-3 btn-style-1">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function toStep2(){
+        var form = document.getElementById("form");
+        form.submit();
+    }
+</script>
+<!-- END / CREATE COURSE CONTENT -->
+</@layout>

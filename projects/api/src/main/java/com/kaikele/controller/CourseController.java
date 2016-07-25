@@ -1,7 +1,5 @@
 package com.kaikele.controller;
 
-import com.jfinal.plugin.activerecord.Db;
-import com.jfinal.plugin.activerecord.IAtom;
 import com.kaikele.common.AppConstants;
 import com.kaikele.common.MatrixToImageWriter;
 import com.kaikele.common.Message;
@@ -15,7 +13,6 @@ import com.kaikele.util.CodeUtils;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.log4j.Logger;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,8 +59,6 @@ public class CourseController extends Controller {
         int template_id = getParaToInt("template_id");
         //未注册用户需要生成课程码
         String course_code = CodeUtils.createCode();
-        //生成课程二维码
-        String qr_code = MatrixToImageWriter.generateQRcode("https://baidu.com");
 
         Course course = new Course().set("title", title)
                 .set("course_code", course_code)
@@ -75,10 +70,13 @@ public class CourseController extends Controller {
                 .set("status", "true")
                 .set("url", url)
                 .set("template_id", template_id)
-                .set("qr_code", qr_code)
                 .set("open_date", open_date)
                 .set("create_at", new Date());
         course.save();
+
+        //生成课程二维码
+        String qr_code = MatrixToImageWriter.generateQRcode("http://10.0.0.8:8082/template/video/" + course.get("id"));
+        course.set("qr_code", qr_code).update();
 
         Map<String, Object> data = new HashMap<>();
         data.put("course", course);
@@ -86,18 +84,21 @@ public class CourseController extends Controller {
         renderJson(message);
     }
 
+    @Before(GET.class)
     public void detail() {
         int id = getParaToInt();
         Course course = Course.dao.findById(id);
-        setAttr("course",course);
+        setAttr("course", course);
         render("/step3.html");
     }
 
-
-    //模板页
-    public void template(){
-        String course_id = getPara("course_id");
-
+    //编辑课程信息完成
+    @Before(GET.class)
+    public void complete() {
+        int id = getParaToInt();
+        Course course = Course.dao.findById(id);
+        setAttr("course", course);
+        render("/complete.html");
     }
 
 
@@ -119,110 +120,60 @@ public class CourseController extends Controller {
         renderJson(message);
     }
 
-
-
-
     /**
-     * 添加课程
-     */
-    @Before(POST.class)
-    public void add() {
-        //标题
-        String title = getPara("title");
-        //描述
-        String desc = getPara("desc");
-        //封面
-        String cover = getPara("cover");
-        //课节数
-        //String lesson_number = getPara("lesson_number");
-        //课程价格
-        //int price = getParaToInt("price");
-        //排序
-        //int sort = getParaToInt("sort");
-        //状态 (true上架,false下架)
-        //String status = getPara("status");
-        //地址(音频,视频,课件,程序)
-        String url = getPara("url");
-
-        //课程模板
-        int templateId = getParaToInt("templateId");
-
-        //生成课程二维码
-        String qr_code = MatrixToImageWriter.generateQRcode("https://baidu.com");
-
-        Course course = new Course().set("title", title)
-                .set("desc", desc)
-                .set("cover", cover)
-                .set("lesson_number", 0)
-                .set("price", 0)
-                .set("sort", 0)
-                .set("status", "true")
-                .set("url", url)
-                .set("qr_code", qr_code)
-                .set("create_at", new Date());
-
-        //未注册用户需要生成课程码
-        String code = CodeUtils.createCode();
-
-        //执行事务(需要保证所有的操作都成功,否则将不做任何事)
-        boolean success = Db.tx(new IAtom() {
-            @Override
-            public boolean run() throws SQLException {
-//                boolean isSaveCourse = course.save();  //保存课程信息
-//                boolean isSaveCourseCode =  new CourseCode().set("code", code).set("course_id", course.get("id")).save();        //保存课程码
-//                boolean isSaveCourseTemplate = new CourseTemplate().set("template_id", templateId).set("course_id", course.get("id")).save();//保存课程与模板关联数据
-//
-//                return isSaveCourse && isSaveCourseCode && isSaveCourseTemplate;
-                return true;
-            }
-        });
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("course", course);
-        Message message = new Message(HttpStatus.SC_OK, "success", data);
-        renderJson(message);
-    }
-
-    /**
-     * 编辑课程
-     */
-    @Before(POST.class)
-    public void edit() {
-        //编号
-        int id = getParaToInt("id");
-        //标题
-        String title = getPara("title");
-        //描述
-        String desc = getPara("desc");
-        //封面
-        String cover = getPara("cover");
-        //地址(音频,视频,课件,程序)
-        String url = getPara("url");
-
-        Course course = Course.dao.findById(id);
-        if (null != course) {
-            course.set("title", title);
-            course.set("desc", desc);
-            course.set("cover", cover);
-            course.set("url", url);
-            course.update();
-        }
-
-        Message message = new Message(HttpStatus.SC_OK, "success", null);
-        renderJson(message);
-    }
-
-    /**
-     * 删除课程
+     * 课程管理
      */
     @Before(GET.class)
-    public void delete() {
-        int id = getParaToInt("id");
-        Course course = Course.dao.findById(id);
-        if (null != course) {
-            course.delete();
+    public void manager() {
+        setAttr("error", "");
+        setAttr("course_code","");
+        render("/manager.html");
+    }
+
+    @Before(GET.class)
+    public void editCourse() {
+        String course_code = getPara("course_code");
+        Course course = Course.dao.findFirst("select * from course where course_code=?", course_code);
+        if (course != null) {
+            setAttr("course", course);
+            render("/edit_course.html");
+        } else {
+            setAttr("course_code",course_code);
+            setAttr("error", "no course.");
+            render("/manager.html");
         }
-        Message message = new Message(HttpStatus.SC_OK, "success", null);
+    }
+
+    @Before(POST.class)
+    public void edit() {
+        String title = getPara("title");
+        String cover = getPara("cover");
+        String url = getPara("url");
+        String desc = getPara("desc");
+        String lesson_number = getPara("lesson_number");
+        String price = getPara("price");
+        String open_date = getPara("open_date");
+        String course_code = getPara("course_code");
+        Course course = Course.dao.findFirst("select * from course where course_code=?", course_code);
+        if (course != null) {
+            course.set("title", title)
+                    .set("desc", desc)
+                    .set("cover", cover)
+                    .set("lesson_number", lesson_number)
+                    .set("price", price)
+                    .set("url", url)
+                    .set("open_date", open_date);
+
+            course.update();
+        }
+        Map<String, Object> data = new HashMap<>();
+        Message message = null;
+        if (course != null) {
+            data.put("course", course);
+            message = new Message(HttpStatus.SC_OK, "success", data);
+        } else {
+            message = new Message(HttpStatus.SC_NO_CONTENT, "no content", data);
+        }
         renderJson(message);
     }
 }

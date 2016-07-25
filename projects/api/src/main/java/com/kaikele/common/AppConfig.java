@@ -2,10 +2,7 @@ package com.kaikele.common;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
-import com.kaikele.controller.CommonController;
-import com.kaikele.controller.CourseController;
-import com.kaikele.controller.UploadController;
-import com.kaikele.controller.UserController;
+import com.kaikele.controller.*;
 import com.kaikele.model.*;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -37,6 +34,7 @@ public class AppConfig extends JFinalConfig {
         me.add("/user", UserController.class);
         me.add("/course",CourseController.class);
         me.add("/upload",UploadController.class);
+        me.add("/template",TemplateController.class);
     }
 
     /**
